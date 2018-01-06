@@ -1,0 +1,28 @@
+HUB:
+
+int tunnel0
+ip nhrp redirect
+router rip 
+	version 2
+	no auto-sum
+	network 10.0.0.0
+	redis connected route-map CONNECTED_TO_RIP
+	
+route-map CONNECTED_TO_RIP
+	match interface l0
+
+SPOKE:
+
+int tunnel0
+ip nhrp shortcut
+router rip 
+	version 2
+	no auto-sum
+	network 10.0.0.0
+	redis connected route-map CONNECTED_TO_RIP
+	
+route-map CONNECTED_TO_RIP
+	match interface l0
+	
+no crypto isakmp key cisco47 add 169.254.100.1
+crypto isakmp key cisco47 add 0.0.0.0

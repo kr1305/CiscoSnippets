@@ -1,0 +1,25 @@
+crypto isakmp policy 1
+	encr aes
+	auth pre-share
+	group 14
+crypto isakmp key DMVPN address 0.0.0.0
+
+crypto ipsec transform-set trans2 esp-aes esp-sha-hmac
+	mode transport
+
+crypto ipsec profile vpnprof
+	set transform-set trans2
+
+int tunnel0
+	tunnel protection ipsec profile vpnprof
+	bandwidth 1000
+	ip address 10.0.0.1 255.255.255.0
+	ip mtu 1400
+	ip tcp adjust-mss 1360
+	ip nhrp auth DMVPN
+	ip nhrp map multi dynamic
+	ip nhrp network-id 10
+	ip nhrp holdtime 30
+	tunnel source f0/0
+	tunnel mode gre multipoint
+	tunnel key 100000
