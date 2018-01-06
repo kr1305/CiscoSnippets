@@ -9,7 +9,7 @@ router rip
 	redis connected route-map CONNECTED_TO_RIP
 	
 route-map CONNECTED_TO_RIP
-	match interface l0
+	match interface lo0
 
 SPOKE:
 
@@ -22,7 +22,4 @@ router rip
 	redis connected route-map CONNECTED_TO_RIP
 	
 route-map CONNECTED_TO_RIP
-	match interface l0
-	
-no crypto isakmp key cisco47 add 169.254.100.1
-crypto isakmp key cisco47 add 0.0.0.0
+	match interface lo0

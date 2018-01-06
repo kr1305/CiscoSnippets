@@ -1,0 +1,18 @@
+HUB:
+
+router bgp 65000
+	bgp log-neighbor-changes
+	no bgp default ipv4-unicast
+	neighbor BLOGPOST peer-group
+	neighbor BLOGPOST remote-as 65000
+	bgp listen range 10.0.0.0/24 peer-group BLOGPOST
+	address-family ipv4
+		neighbor BLOGPOST activate
+		neighbor BLOGPOST route-reflector-client
+		
+SPOKE:
+
+router bgp 65000
+	bgp log-neighbor-changes
+	neighbor 10.0.0.1 remote-as 65000
+	network 2.2.2.2 mask 255.255.255.255
